@@ -34,3 +34,7 @@ The NXT Pulse Agent doesn't just wait for commands. It monitors your session log
 
 ---
 Created by [adnXone](https://github.com/adnxone) for the OpenClaw community.
+
+<p align="center">
+  <img src=".github/icon.png" alt="NXT Pulse Agent Icon" width="128">
+</p>

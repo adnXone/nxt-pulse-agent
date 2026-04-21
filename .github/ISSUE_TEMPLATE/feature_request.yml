@@ -1,0 +1,20 @@
+name: Feature Request
+description: Suggest an idea for NXT Pulse Agent
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We love new ideas for neuro-inclusive productivity!
+  - type: textarea
+    id: idea
+    attributes:
+      label: What is your suggestion?
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: How does this help?
+      description: Explain how this feature helps with ADHD, energy management, or proactivity.
