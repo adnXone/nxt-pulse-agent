@@ -1,20 +1,20 @@
 ---
 name: nxt-pulse-agent
 description: "A highly proactive agent skill (NXT) that manages user energy levels and task prioritization with ADHD micro-stepping support."
-version: 0.2.0
+version: 0.3.1
 ---
 
-# Next Pulse Agent (NXT) v0.2.0
+# Next Pulse Agent (NXT) v0.3.0
 
 This skill transforms your agent into a proactive partner that understands energy fluctuations (especially for ADHD users) and manages tasks through "Pulse Checks" instead of rigid reminders.
 
 ## 🌟 Key Features
 
-- **Energy-Aware Nudging**: Detects user energy status (🟢/🟡/🔴) and proactively suggests moving complex tasks to "Hyperfocus Windows".
+- **Semantic Energy Detection**: Uses LLM reasoning to detect user energy (🟢/🟡/🔴) from natural language cues, not just keywords.
 - **"Just 2 Minutes" Mode (ADHD)**: When in 🔴 (Low Energy), the agent proposes a single micro-step (max 2 min effort) to break inertia without burnout.
-- **Critical Override**: Automatically bypasses "Snooze" mode for deadlines within 6 hours.
-- **Audit Trail (Transparency)**: Every proactive decision (Nudges, Overrides) is logged with reasoning in `memory/pulse-history.jsonl` for admin transparency.
-- **Visual Feedback**: Uses a color-coded pulse system to reduce cognitive load during fatigue.
+- **LLM-Driven Critical Override**: Automatically detects deadlines and high-pressure contexts semantically. Bypasses "Snooze" when an urgent task is identified in `< 6 hours`.
+- **Audit Trail (Transparency)**: Every proactive decision is logged with reasoning in `memory/pulse-history.jsonl` for full visibility.
+- **Visual Feedback**: Color-coded pulse system to reduce cognitive load during fatigue.
 
 ## 🛠 Configuration
 
@@ -31,13 +31,27 @@ The skill includes a Node.js helper to manage state and avoid "nudge fatigue":
 - **Audit Logging**: Records reasoning for every proactive nudge to ensure admin transparency.
 - **State Persistence**: Tracks the last pulse time in `memory/pulse-state.json`.
 
+
+## 🔍 Implementation Status (Security Audit Alignment)
+
+> [!IMPORTANT]
+> This skill is currently in **Active Development (Beta)**. Some features described below are performed by the LLM (Agent) using context-reading tools, while others are handled by the `pulse.js` script.
+
+| Feature | Implementation Method | Status |
+| :--- | :--- | :--- |
+| **Energy Analysis** | LLM Sentiment Analysis of `memory/` logs | ✅ Active (LLM) |
+| **State Tracking** | Local File (`memory/pulse-state.json`) | ✅ Active (`pulse.js`) |
+| **Audit Logging** | Local File (`memory/pulse-history.jsonl`) | ✅ Active (`pulse.js`) |
+| **Calendar Sync** | LLM Semantic Analysis of `MEMORY.md` & Logs | ✅ Active (LLM-driven) |
+| **External APIs** | Future roadmap (Google/Outlook Calendar) | ⏳ Not Implemented |
+
 ## 🚀 Workflow
 
 ### 1. The Startup Pulse & Autonomous Logic
-At the start of every session, the agent analyzes:
-1. **Critical Override**: Check for any deadlines in `< 6 hours`. If found, bypass Snooze and alert immediately.
-2. **Sentiment-Based Energy**: Gauges energy from recent interaction logs and context.
-3. **Visual Status**: Displays energy pulse (🟢/🟡/🔴).
+At the start of every session, the agent performs a **Semantic Context Check**:
+1. **Critical Override**: The agent uses its LLM reasoning to analyze recent logs and `MEMORY.md`. If it detects a deadline within `< 6 hours` or high-priority pressure, it creates a `memory/critical_deadlines.txt` trigger.
+2. **Sentiment-Based Energy**: Gauges energy levels (🟢/🟡/🔴) based on linguistic cues and user interaction history.
+3. **Visual Status**: Displays the energy pulse.
 
 ### 2. The Smart Nudge & Micro-Steps
 Instead of complex questions, the agent provides a single, logical next step:

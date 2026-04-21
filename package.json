@@ -1,6 +1,6 @@
 {
   "name": "nxt-pulse-agent",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "A highly proactive agent skill (NXT) that manages user energy levels and task prioritization with ADHD micro-stepping support.",
   "type": "skill",
   "author": "adnXone <https://github.com/adnxone>",

@@ -77,9 +77,32 @@ async function runPulse() {
     fs.writeFileSync(CONFIG.STATE_FILE, JSON.stringify(state, null, 2));
 }
 
+
+/**
+ * Check for critical deadlines using a combination of file triggers and 
+ * context-aware heuristics. The main LLM agent is instructed to trigger 
+ * the file-based override when it detects urgency in natural language.
+ */
 function checkForCriticalDeadlines() {
-    const overrideFile = path.join(process.cwd(), 'temp_deadline_trigger.txt');
-    return fs.existsSync(overrideFile);
+    const deadlineTriggers = [
+        path.join(process.cwd(), 'temp_deadline_trigger.txt'),
+        path.join(process.cwd(), 'memory', 'critical_deadlines.txt')
+    ];
+
+    // 1. Check for explicit trigger files (often created by the LLM agent 
+    //    after analyzing interaction context/sentiment)
+    if (deadlineTriggers.some(file => fs.existsSync(file))) {
+        return true;
+    }
+
+    // 2. Date-based trigger: If a file named after today exists in a 'deadlines' dir
+    const todayStr = new Date().toISOString().split('T')[0];
+    const dailyDeadlineFile = path.join(process.cwd(), 'memory', 'deadlines', `${todayStr}.txt`);
+    if (fs.existsSync(dailyDeadlineFile)) {
+        return true;
+    }
+
+    return false;
 }
 
 runPulse().catch(err => {
