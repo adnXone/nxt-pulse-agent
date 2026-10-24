@@ -1,0 +1,18 @@
+# Keep user/runtime data and internal planning docs out of the published bundle.
+
+# Per-user runtime state
+memory/
+*.jsonl
+
+# Local registry metadata
+.clawhub/
+.clawdhub/
+_meta.json
+
+# Legacy trigger file (removed in v0.6.0)
+temp_deadline_trigger.txt
+
+
+
+# Tooling
+node_modules/

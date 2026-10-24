@@ -1,0 +1,14 @@
+# Runtime state written by the skill (per-user data, never publish)
+memory/
+*.jsonl
+
+# Local ClawHub install/publish metadata
+.clawhub/
+.clawdhub/
+_meta.json
+
+# Legacy trigger-file mechanism (removed in v0.6.0)
+temp_deadline_trigger.txt
+
+# Tooling
+node_modules/
